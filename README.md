@@ -49,7 +49,7 @@
 | identifier | Optional identifier for DB. If not passed, {environment\_name}-{name} will be used | `string` | `""` | no |
 | instance\_class | n/a | `string` | n/a | yes |
 | kms\_key\_arn | KMS Key ARN to use a CMK instead of default shared key, when storage\_encrypted is true | `string` | `""` | no |
-| lambda\_subnet\_ids | List of subnet IDs for VPC lambda, if secret rotation is enabled | `list(string)` | `[]` | no |
+| lambda\_subnet\_ids | List of subnet IDs for VPC lambda, if secret rotation is enabled | `list(string)` | n/a | yes |
 | license\_model | License model information for this DB instance (Optional, but required for some DB engines, i.e. Oracle SE1 and SQL Server) | `string` | `null` | no |
 | maintenance\_window | (RDS Only) The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00' | `string` | `"Sun:04:00-Sun:05:00"` | no |
 | major\_engine\_version | Specifies the major version of the engine that this option group should be associated with | `string` | `""` | no |
@@ -71,8 +71,8 @@
 | publicly\_accessible | (Optional) Bool to control if instance is publicly accessible | `bool` | `false` | no |
 | retention | Snapshot retention period in days | `number` | n/a | yes |
 | secret\_method | Use ssm for SSM parameters store which is the default option, or secretsmanager for AWS Secrets Manager | `string` | `"ssm"` | no |
-| secret\_rotate\_days | Number of days for the secret to rotate | `number` | `30` | no |
-| secret\_rotation | Enable secret rotation for database master user, if AWS Secrets Manager is used | `bool` | `false` | no |
+| secret\_rotate\_days | (Optional) Number of days for the secret to rotate | `number` | `30` | no |
+| secret\_rotation | (Optional) Enable secret rotation for database master user, if AWS Secrets Manager is used | `bool` | `false` | no |
 | skip\_final\_snapshot | Skips the final snapshot if the database is destroyed programatically | `bool` | `false` | no |
 | snapshot\_identifier | Pass a snapshot identifier for the database to be created from this snapshot | `string` | `""` | no |
 | storage\_encrypted | Enables storage encryption | `bool` | n/a | yes |
