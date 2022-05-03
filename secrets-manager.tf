@@ -1,6 +1,6 @@
 resource "aws_secretsmanager_secret" "rds" {
   count                   = var.secrets_manager ? 1 : 0
-  name                    = var.identifier == "" ? "/rds/${var.environment_name}-${var.name}" : "/rds/${var.identifier}"
+  name                    = "/rds/${var.environment_name}-${var.name}/${var.user}"
   recovery_window_in_days = 0
 }
 
