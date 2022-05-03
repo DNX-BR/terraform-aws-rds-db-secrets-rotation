@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_rotate_secrets" {
-  count              = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count              = var.secrets_manager && var.secret_rotation ? 1 : 0
   name               = "lambda-rotate-rds-secret-${var.environment_name}-${var.name}-${data.aws_region.current.name}"
   assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy[0].json
 
@@ -20,7 +20,7 @@ resource "aws_iam_role" "lambda_rotate_secrets" {
 }
 
 data "aws_iam_policy_document" "instance_assume_role_policy" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   statement {
     actions = ["sts:AssumeRole"]
@@ -33,7 +33,7 @@ data "aws_iam_policy_document" "instance_assume_role_policy" {
 }
 
 data "aws_iam_policy_document" "basic" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   statement {
     actions = [
@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "basic" {
 }
 
 data "aws_iam_policy_document" "secrets" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   statement {
     actions = [
@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "secrets" {
 }
 
 data "aws_iam_policy_document" "kms" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   statement {
     actions = [
@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "kms" {
 }
 
 resource "aws_lambda_function" "lambda_rotate_secrets" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   function_name    = "lambda-rotate-rds-secret-${var.environment_name}-${var.name}"
   filename         = "${path.module}/lambda_files/lambda-rotate-secrets.zip"
@@ -103,7 +103,7 @@ resource "aws_lambda_function" "lambda_rotate_secrets" {
 }
 
 resource "aws_lambda_permission" "allow_secrets_manager" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   statement_id  = "AllowExecutionFromSecretManager"
   action        = "lambda:InvokeFunction"

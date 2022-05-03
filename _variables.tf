@@ -261,11 +261,23 @@ variable "max_allocated_storage" {
   default     = 0
 }
 
-variable "secret_method" {
-  description = "Use ssm for SSM parameters store which is the default option, or secretsmanager for AWS Secrets Manager"
-  type        = string
-  default     = "ssm"
+variable "ssm" {
+  description = "Enable the use of ssm for SSM parameter store"
+  type = bool
+  default = true
 }
+
+variable "secrets_manager" {
+  description = "Enables the creation of a secret in AWS Secrets Manager for the rds database"
+  type = bool
+  default = false
+}
+
+# variable "secret_method" {
+#   description = "Use ssm for SSM parameters store which is the default option, or secretsmanager for AWS Secrets Manager"
+#   type        = string
+#   default     = "ssm"
+# }
 
 variable "secret_rotation" {
   description = "(Optional) Enable secret rotation for database master user, if AWS Secrets Manager is used"

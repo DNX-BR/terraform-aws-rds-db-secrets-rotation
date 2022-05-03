@@ -1,5 +1,5 @@
 resource "aws_ssm_parameter" "rds_db_password" {
-  count       = var.secret_method == "ssm" ? 1 : 0
+  count       = var.ssm ? 1 : 0
   name        = "/rds/${var.environment_name}-${var.name}/PASSWORD"
   description = "RDS Password"
   type        = "SecureString"
@@ -11,7 +11,7 @@ resource "aws_ssm_parameter" "rds_db_password" {
 }
 
 resource "aws_ssm_parameter" "rds_db_user" {
-  count       = var.secret_method == "ssm" ? 1 : 0
+  count       = var.ssm ? 1 : 0
   name        = "/rds/${var.environment_name}-${var.name}/USER"
   description = "RDS User"
   type        = "SecureString"
@@ -19,7 +19,7 @@ resource "aws_ssm_parameter" "rds_db_user" {
 }
 
 resource "aws_ssm_parameter" "rds_endpoint" {
-  count       = var.secret_method == "ssm" ? 1 : 0
+  count       = var.ssm ? 1 : 0
   name        = "/rds/${var.environment_name}-${var.name}/ENDPOINT"
   description = "RDS Endpoint"
   type        = "String"
@@ -28,7 +28,7 @@ resource "aws_ssm_parameter" "rds_endpoint" {
 
 
 resource "aws_ssm_parameter" "rds_reader_endpoint" {
-  count       = var.db_type == "aurora" && var.secret_method == "ssm" ? 1 : 0
+  count       = var.db_type == "aurora" && var.ssm ? 1 : 0
   name        = "/rds/${var.environment_name}-${var.name}/READER_ENDPOINT"
   description = "RDS Reader Endpoint"
   type        = "String"
@@ -36,7 +36,7 @@ resource "aws_ssm_parameter" "rds_reader_endpoint" {
 }
 
 resource "aws_ssm_parameter" "rds_db_address" {
-  count       = var.secret_method == "ssm" ? 1 : 0
+  count       = var.ssm ? 1 : 0
   name        = "/rds/${var.environment_name}-${var.name}/HOST"
   description = "RDS Hostname"
   type        = "String"

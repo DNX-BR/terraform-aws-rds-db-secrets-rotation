@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "rds" {
-  count                   = var.secret_method == "secretsmanager" ? 1 : 0
+  count                   = var.secrets_manager ? 1 : 0
   name                    = var.identifier == "" ? "/rds/${var.environment_name}-${var.name}" : "/rds/${var.identifier}"
   recovery_window_in_days = 0
 }
@@ -19,13 +19,13 @@ locals {
 }
 
 resource "aws_secretsmanager_secret_version" "rds" {
-  count         = var.secret_method == "secretsmanager" ? 1 : 0
+  count         = var.secrets_manager ? 1 : 0
   secret_id     = aws_secretsmanager_secret.rds[0].id
   secret_string = jsonencode(local.rds_secret)
 }
 
 resource "aws_secretsmanager_secret_rotation" "secret" {
-  count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
+  count = var.secrets_manager && var.secret_rotation ? 1 : 0
 
   secret_id           = aws_secretsmanager_secret.rds[0].id
   rotation_lambda_arn = aws_lambda_function.lambda_rotate_secrets[0].arn
