@@ -70,11 +70,12 @@
 | preferred\_maintenance\_window | (Aurora Only) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30 | `string` | `"Sun:04:00-Sun:05:00"` | no |
 | publicly\_accessible | (Optional) Bool to control if instance is publicly accessible | `bool` | `false` | no |
 | retention | Snapshot retention period in days | `number` | n/a | yes |
-| secret\_method | Use ssm for SSM parameters store which is the default option, or secretsmanager for AWS Secrets Manager | `string` | `"ssm"` | no |
 | secret\_rotate\_days | (Optional) Number of days for the secret to rotate | `number` | `30` | no |
 | secret\_rotation | (Optional) Enable secret rotation for database master user, if AWS Secrets Manager is used | `bool` | `false` | no |
+| secrets\_manager | Enables the creation of a secret in AWS Secrets Manager for the rds database | `bool` | `false` | no |
 | skip\_final\_snapshot | Skips the final snapshot if the database is destroyed programatically | `bool` | `false` | no |
 | snapshot\_identifier | Pass a snapshot identifier for the database to be created from this snapshot | `string` | `""` | no |
+| ssm | Enable the use of ssm for SSM parameter store | `bool` | `true` | no |
 | storage\_encrypted | Enables storage encryption | `bool` | n/a | yes |
 | user | DB User | `string` | n/a | yes |
 | vpc\_id | n/a | `string` | n/a | yes |
