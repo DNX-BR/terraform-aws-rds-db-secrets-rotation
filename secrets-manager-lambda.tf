@@ -1,6 +1,6 @@
 resource "aws_iam_role" "lambda_rotate_secrets" {
   count              = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
-  name               = "lambda-rotate-secrets-${var.environment_name}-${data.aws_region.current.name}"
+  name               = "lambda-rotate-rds-secret-${var.environment_name}-${var.name}-${data.aws_region.current.name}"
   assume_role_policy = data.aws_iam_policy_document.instance_assume_role_policy[0].json
 
   inline_policy {
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "kms" {
 resource "aws_lambda_function" "lambda_rotate_secrets" {
   count = var.secret_method == "secretsmanager" && var.secret_rotation ? 1 : 0
 
-  function_name    = "lambda-rotate-secrets-${var.environment_name}-${var.identifier}-${var.user}"
+  function_name    = "lambda-rotate-rds-secret-${var.environment_name}-${var.name}"
   filename         = "${path.module}/lambda_files/lambda-rotate-secrets.zip"
   role             = aws_iam_role.lambda_rotate_secrets[0].arn
   handler          = "lambda_function.lambda_handler"
