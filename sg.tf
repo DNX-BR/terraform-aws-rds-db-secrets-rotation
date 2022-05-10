@@ -1,3 +1,6 @@
+locals {
+  allow_security_group_ids = var.secret_rotation ? concat(var.allow_security_group_ids, [aws_security_group.rds_db.id]) : var.allow_security_group_ids
+}
 
 resource "aws_security_group" "rds_db" {
   name   = "rds-${var.environment_name}-${var.name}"
@@ -20,12 +23,12 @@ resource "aws_security_group_rule" "rds_db_inbound_cidrs" {
 }
 
 resource "aws_security_group_rule" "rds_db_inbound_ecs" {
-  count                    = length(var.allow_security_group_ids)
+  count                    = length(local.allow_security_group_ids)
   type                     = "ingress"
   from_port                = var.port
   to_port                  = var.port
   protocol                 = "tcp"
-  source_security_group_id = var.allow_security_group_ids[count.index]
+  source_security_group_id = local.allow_security_group_ids[count.index]
   security_group_id        = aws_security_group.rds_db.id
   description              = "From ECS Nodes"
 }
