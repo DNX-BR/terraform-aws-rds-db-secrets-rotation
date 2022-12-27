@@ -263,14 +263,14 @@ variable "max_allocated_storage" {
 
 variable "ssm" {
   description = "Enable the use of ssm for SSM parameter store"
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "secrets_manager" {
   description = "Enables the creation of a secret in AWS Secrets Manager for the rds database"
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 # variable "secret_method" {
@@ -287,8 +287,8 @@ variable "secret_rotation" {
 
 variable "secret_rotate_days" {
   description = "(Optional) Number of days for the secret to rotate"
-  type = number
-  default = 30
+  type        = number
+  default     = 30
 }
 
 variable "lambda_subnet_ids" {
@@ -340,4 +340,10 @@ variable "preferred_maintenance_window" {
   type        = string
   description = "(Aurora Only) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30"
   default     = "Sun:04:00-Sun:05:00"
+}
+
+
+variable "secret_exclude_characters" {
+  description = "Define exclude characters in database password on secret rotation"
+  default     = "/@\"'\\"
 }
