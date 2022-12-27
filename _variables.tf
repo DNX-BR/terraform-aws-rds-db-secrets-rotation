@@ -341,3 +341,9 @@ variable "preferred_maintenance_window" {
   description = "(Aurora Only) The weekly time range during which system maintenance can occur, in (UTC) e.g., wed:04:00-wed:04:30"
   default     = "Sun:04:00-Sun:05:00"
 }
+
+
+variable "var.secret_exclude_characters" {
+  description = "Define exclude characters in database password on secret rotation"
+  default = "/@\"'\\"
+}
