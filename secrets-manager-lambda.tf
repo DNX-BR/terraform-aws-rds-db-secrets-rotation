@@ -38,7 +38,7 @@ resource "aws_lambda_function" "lambda_rotate_secrets" {
 
   environment {
     variables = {
-      EXCLUDE_CHARACTERS       =  var.secret_exclude_characters#"/@\"'\\"
+      EXCLUDE_CHARACTERS       =  var.secret_exclude_characters
       SECRETS_MANAGER_ENDPOINT = "https://secretsmanager.${data.aws_region.current.name}.amazonaws.com"
     }
   }
