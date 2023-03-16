@@ -3,6 +3,11 @@ variable "name" {
   description = "Name of this RDS Database"
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "Tags"
+}
+
 variable "environment_name" {
   type        = string
   description = "Environment name to use as a prefix to this DB"
