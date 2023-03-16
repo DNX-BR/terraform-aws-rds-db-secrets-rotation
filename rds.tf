@@ -35,7 +35,7 @@ resource "aws_db_instance" "rds_db" {
   monitoring_role_arn             = var.monitoring_interval > 0 ? aws_iam_role.rds_monitoring[count.index].arn : ""
   maintenance_window              = var.maintenance_window
   backup_window                   = var.backup_window
-  tags                            = var.tags
+  tags                            = try(var.tags, null)
 }
 
 
